@@ -49,7 +49,8 @@ def get_model_dataloader(
     patch_size: Union[int, None]=None,
     device: str="cuda",
     differing_config_file=None,
-    shuffle=True):
+    shuffle=True,
+    only_model=False):
     
     device = torch.device(device)
     
@@ -57,6 +58,9 @@ def get_model_dataloader(
     print(config_file)
 
     model = get_model(config_file=config_file, checkpoint_file=checkpoint_file, device=device)
+
+    if only_model:
+        return model
 
     if differing_config_file is not None:
         dataset, _ = dataset_from_config(config_file=differing_config_file, meta_keys=meta_keys, patch_size=patch_size)
